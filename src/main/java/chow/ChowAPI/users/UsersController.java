@@ -16,10 +16,10 @@ public class UsersController {
     @Autowired
     private UserModel model;
 
-//    @GetMapping(path = "/users")
-//    public List<User> all() {
-//        return model.allUsers();
-//    }
+    @GetMapping(path = "/users")
+    public List<User> all() {
+        return model.allUsers();
+    }
 
     @GetMapping(path = "users/{id}")
     public ResponseEntity<Object> findUser(@PathVariable int id) {
