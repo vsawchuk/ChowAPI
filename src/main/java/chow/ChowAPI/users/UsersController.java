@@ -21,6 +21,13 @@ public class UsersController {
 //        return model.allUsers();
 //    }
 
+    @GetMapping(path = "users/{id}")
+    public ResponseEntity<Object> findUser(@PathVariable int id) {
+        User user = model.findUser(id);
+        ResponseEntity response = ResponseEntity.ok(user);
+        return response;
+    }
+
     // TODO: require auth token from google
     @PostMapping(path = "/users")
     public ResponseEntity<Object> createUser(@RequestBody User user) {

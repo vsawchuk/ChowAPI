@@ -3,6 +3,7 @@ package chow.ChowAPI.users;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -24,5 +25,17 @@ public class UserModel {
         user.setId(usersCount);
         users.add(user);
         return user;
+    }
+
+    public User findUser(int id) {
+        Iterator<User> iterator = users.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (user.getId() == id) {
+                iterator.remove();
+                return user;
+            }
+        }
+        return null;
     }
 }
