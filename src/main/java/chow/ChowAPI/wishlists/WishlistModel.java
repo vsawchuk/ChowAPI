@@ -28,22 +28,21 @@ public class WishlistModel {
         return userWishlists;
     }
 
-//    public User findUser(int id) {
-//        Iterator<User> iterator = users.iterator();
-//        while (iterator.hasNext()) {
-//            User user = iterator.next();
-//            if (user.getId() == id) {
-//                iterator.remove();
-//                return user;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public User save(User user) {
-//        usersCount++;
-//        user.setId(usersCount);
-//        users.add(user);
-//        return user;
-//    }
+    public Wishlist findWishlist(int id, int userId) {
+        Iterator<Wishlist> iterator = wishlists.iterator();
+        while(iterator.hasNext()) {
+            Wishlist wishlist = iterator.next();
+            if ((wishlist.getUserId() == userId) && (wishlist.getId() == id)) {
+                return wishlist;
+            }
+        }
+        return null;
+    }
+
+    public Wishlist save(Wishlist wishlist) {
+        wishlistCount++;
+        wishlist.setId(wishlistCount);
+        wishlists.add(wishlist);
+        return wishlist;
+    }
 }

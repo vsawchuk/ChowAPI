@@ -31,7 +31,6 @@ public class UsersController {
     // TODO: require auth token from google
     @PostMapping(path = "/users")
     public ResponseEntity<Object> createUser(@RequestBody User user) {
-        System.out.println(user.getEmail());
         User savedUser = model.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
