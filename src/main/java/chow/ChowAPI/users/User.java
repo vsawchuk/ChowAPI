@@ -1,7 +1,6 @@
 package chow.ChowAPI.users;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -67,10 +66,6 @@ public class User implements Serializable {
 
     public String getPhotoUrl() {
         return this.photoUrl;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setUsername(String username) {

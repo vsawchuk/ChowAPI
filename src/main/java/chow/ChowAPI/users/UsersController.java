@@ -1,10 +1,6 @@
 package chow.ChowAPI.users;
 
 import java.net.URI;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

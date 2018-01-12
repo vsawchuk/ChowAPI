@@ -3,11 +3,11 @@ package chow.ChowAPI.wishlists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class WishlistsController {
@@ -16,16 +16,17 @@ public class WishlistsController {
 
     @GetMapping(path = "/users/{userId}/wishlists")
     public ResponseEntity<Object> findUserWishlists(@PathVariable int userId) {
-        List<Wishlist> wishlists = model.allWishlistsByUserId(userId);
-        ResponseEntity response = ResponseEntity.ok(wishlists);
-        return response;
+        List<Wishlist> wishlists = model.findByUserId(userId);
+        return ResponseEntity.ok(wishlists);
     }
 
     @GetMapping(path = "/users/{userId}/wishlists/{id}")
-    public ResponseEntity<Object> findWishlist(@PathVariable int userId, @PathVariable int id) {
-        Wishlist wishlist = model.findWishlist(id, userId);
-        ResponseEntity response = ResponseEntity.ok(wishlist);
-        return response;
+    public ResponseEntity<Object> findWishlist(@PathVariable int userId, @PathVariable Long id) {
+        Optional<Wishlist> user = model.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping(path = "users/{userId}/wishlists")
@@ -34,7 +35,6 @@ public class WishlistsController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedWishlist.getId()).toUri();
-        ResponseEntity response = ResponseEntity.created(location).body(savedWishlist);
-        return response;
+        return ResponseEntity.created(location).body(savedWishlist);
     }
 }
