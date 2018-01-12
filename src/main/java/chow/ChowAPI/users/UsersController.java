@@ -2,14 +2,14 @@ package chow.ChowAPI.users;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.xml.ws.Response;
+import javax.persistence.EntityManager;
 
 @RestController
 public class UsersController {
@@ -18,19 +18,21 @@ public class UsersController {
 
     @GetMapping(path = "/users")
     public List<User> all() {
-        return model.allUsers();
+        return model.findAll();
     }
 
-    @GetMapping(path = "users/{id}")
-    public ResponseEntity<Object> findUser(@PathVariable int id) {
-        User user = model.findUser(id);
-        ResponseEntity response = ResponseEntity.ok(user);
-        return response;
+    @GetMapping(path = "/users/{id}")
+    public ResponseEntity<User> findUser(@PathVariable(value = "id") Long id) {
+        Optional<User> user = model.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     // TODO: require auth token from google
     @PostMapping(path = "/users")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = model.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")

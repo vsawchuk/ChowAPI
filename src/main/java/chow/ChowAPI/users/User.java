@@ -1,15 +1,36 @@
 package chow.ChowAPI.users;
 
-public class User {
-    private Integer id;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.stereotype.Controller;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name="user")
+@EntityListeners(AuditingEntityListener.class)
+public class User implements Serializable {
+
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name="name")
     private String username;
+
+    @Column(name="email")
     private String email;
+
+    @Column(name="google_id")
     private String googleId;
+
+    @Column(name="photo_url")
     private String photoUrl;
 
     protected User() { }
 
-    public User(Integer id, String username, String email, String googleId, String photoUrl) {
+    public User(Long id, String username, String email, String googleId, String photoUrl) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -17,7 +38,18 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getId() {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", googleId='" + googleId + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
+    }
+
+    public Long getId() {
         return this.id;
     }
 
@@ -37,7 +69,7 @@ public class User {
         return this.photoUrl;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
