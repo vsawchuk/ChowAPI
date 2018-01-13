@@ -1,10 +1,13 @@
 package chow.ChowAPI.restaurants;
 
+import chow.ChowAPI.wishlists.Wishlist;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="restaurant")
@@ -39,6 +42,16 @@ public class Restaurant implements Serializable {
 
     @Column(name="display_address")
     private ArrayList<String> displayAddress;
+
+    @ManyToMany(
+            fetch=FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "restaurants"
+    )
+    private Set<Wishlist> wishlists = new HashSet<>();
 
     protected Restaurant() { }
 
