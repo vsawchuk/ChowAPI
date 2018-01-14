@@ -1,6 +1,7 @@
 package chow.ChowAPI.restaurants;
 
 import chow.ChowAPI.wishlists.Wishlist;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -51,6 +52,7 @@ public class Restaurant implements Serializable {
             },
             mappedBy = "restaurants"
     )
+    @JsonBackReference
     private Set<Wishlist> wishlists = new HashSet<>();
 
     protected Restaurant() { }

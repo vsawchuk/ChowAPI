@@ -2,6 +2,8 @@ package chow.ChowAPI.wishlists;
 
 
 import chow.ChowAPI.restaurants.Restaurant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -26,7 +28,7 @@ public class Wishlist implements Serializable {
     private int userId;
 
     @ManyToMany(
-            fetch=FetchType.LAZY,
+            fetch=FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
@@ -37,6 +39,7 @@ public class Wishlist implements Serializable {
             joinColumns = { @JoinColumn(name="wishlist_id") },
             inverseJoinColumns = { @JoinColumn(name="restaurant_id") }
     )
+    @JsonManagedReference
     private Set<Restaurant> restaurants = new HashSet<>();
 
     protected Wishlist() { }

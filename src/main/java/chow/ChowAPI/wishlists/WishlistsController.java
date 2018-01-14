@@ -22,9 +22,10 @@ public class WishlistsController {
 
     @GetMapping(path = "/users/{userId}/wishlists/{id}")
     public ResponseEntity<Object> findWishlist(@PathVariable int userId, @PathVariable Long id) {
-        Optional<Wishlist> user = model.findById(id);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+        Optional<Wishlist> wishlist = model.findById(id);
+        if (wishlist.isPresent()) {
+            System.out.println(wishlist.get());
+            return ResponseEntity.ok(wishlist.get());
         }
         return ResponseEntity.notFound().build();
     }
