@@ -144,4 +144,8 @@ public class Restaurant implements Serializable {
     public void setDisplayAddress(ArrayList<String> displayAddress) {
         this.displayAddress = displayAddress;
     }
+
+    public Set<Wishlist> getWishlists() {
+        return this.wishlists;
+    }
 }

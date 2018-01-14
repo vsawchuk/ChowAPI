@@ -68,6 +68,10 @@ public class Wishlist implements Serializable {
         return this.userId;
     }
 
+    public Set<Restaurant> getRestaurants() {
+        return this.restaurants;
+    }
+
     protected void setName(String name) {
         this.name = name;
     }
