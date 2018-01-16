@@ -32,6 +32,7 @@ public class WishlistsController {
 
     @PostMapping(path = "users/{userId}/wishlists")
     public ResponseEntity<Object> createUser(@RequestBody Wishlist wishlist) {
+        System.out.println("IN THE POST PATH");
         Wishlist savedWishlist = model.save(wishlist);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")

@@ -29,7 +29,6 @@ public class WishlistRestaurantsController {
             return ResponseEntity.notFound().build();
         }
         Wishlist wishlist = wishlistModel.getOne(wishlistId);
-        Long restaurantId;
         List<Restaurant> dbRestaurants = restaurantModel.findByYelpId(restaurant.getYelpId());
         if (dbRestaurants.size() > 0) {
             restaurant = dbRestaurants.get(0);
