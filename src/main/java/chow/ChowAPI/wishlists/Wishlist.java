@@ -2,6 +2,8 @@ package chow.ChowAPI.wishlists;
 
 
 import chow.ChowAPI.restaurants.Restaurant;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -39,8 +41,8 @@ public class Wishlist implements Serializable {
             joinColumns = { @JoinColumn(name="wishlist_id") },
             inverseJoinColumns = { @JoinColumn(name="restaurant_id") }
     )
-    @JsonManagedReference
-    private Set<Restaurant> restaurants = new HashSet<>();
+    @JsonBackReference
+    private Set<Restaurant> restaurants;
 
     protected Wishlist() { }
 
@@ -48,6 +50,7 @@ public class Wishlist implements Serializable {
         this.id = id;
         this.name = name;
         this.userId = userId;
+        this.restaurants = new HashSet<>();
     }
 
     @Override
