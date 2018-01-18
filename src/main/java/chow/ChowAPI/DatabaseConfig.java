@@ -16,10 +16,15 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setUrl(dotenv.get("DB_URL"));
-        dataSource.setUsername(dotenv.get("DB_USERNAME"));
-        dataSource.setPassword(dotenv.get("DB_PASSWORD"));
-
+        if (System.getenv("SPRING_DATASOURCE_URL") != null) {
+            dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
+            dataSource.setUsername(System.getenv("SPRING_DATASOURCE_USERNAME"));
+            dataSource.setPassword(System.getenv("SPRING_DATASOURCE_PASSWORD"));
+        } else {
+            dataSource.setUrl(dotenv.get("AWS_DB_URL"));
+            dataSource.setUsername(dotenv.get("AWS_DB_USERNAME"));
+            dataSource.setPassword(dotenv.get("AWS_DB_PASSWORD"));
+        }
         return dataSource;
     }
 }
