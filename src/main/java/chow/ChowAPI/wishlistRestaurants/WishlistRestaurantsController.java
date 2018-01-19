@@ -6,10 +6,7 @@ import chow.ChowAPI.wishlists.Wishlist;
 import chow.ChowAPI.wishlists.WishlistModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +39,18 @@ public class WishlistRestaurantsController {
 
         wishlistModel.save(wishlist);
 
+        return ResponseEntity.ok(wishlist);
+    }
+
+    @DeleteMapping("users/{userId}/wishlists/{wishlistId}/delete/{restaurantId}")
+    public ResponseEntity<Object> deleteRestaurantFromWishlist(@PathVariable Long restaurantId, @PathVariable Long wishlistId) {
+        if (!wishlistModel.existsById(wishlistId) || !restaurantModel.existsById(restaurantId)) {
+            return ResponseEntity.notFound().build();
+        }
+        Wishlist wishlist = wishlistModel.getOne(wishlistId);
+        Restaurant restaurant = restaurantModel.getOne(restaurantId);
+        wishlist.getRestaurants().remove(restaurant);
+        wishlistModel.save(wishlist);
         return ResponseEntity.ok(wishlist);
     }
 
