@@ -24,15 +24,24 @@ public class WishlistsController {
     public ResponseEntity<Object> findWishlist(@PathVariable int userId, @PathVariable Long id) {
         Optional<Wishlist> wishlist = model.findById(id);
         if (wishlist.isPresent()) {
-            System.out.println(wishlist.get());
             return ResponseEntity.ok(wishlist.get());
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/users/{userId}/wishlists/{id}")
-    public ResponseEntity<Object> updateWishlist(@PathVariable int userId, @PathVariable Long id, @RequestBody String name) {
-        return ResponseEntity.ok(name);
+    public ResponseEntity<Object> updateWishlist(@PathVariable int userId, @PathVariable Long id, @RequestParam String name) {
+        Optional<Wishlist> wishlist = model.findById(id);
+        if (wishlist.isPresent()) {
+            Wishlist updatedWishlist = wishlist.get();
+            if (updatedWishlist.getName().equals(name)) {
+                return ResponseEntity.badRequest().build();
+            }
+            updatedWishlist.setName(name);
+            model.save(updatedWishlist);
+            return ResponseEntity.ok(wishlist.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping(path = "users/{userId}/wishlists")
