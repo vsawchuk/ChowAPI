@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.swing.text.html.Option;
+import javax.xml.ws.Response;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -51,5 +53,19 @@ public class WishlistsController {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedWishlist.getId()).toUri();
         return ResponseEntity.created(location).body(savedWishlist);
+    }
+
+    @DeleteMapping("/users/{userId}/wishlists/{id}")
+    public ResponseEntity<Object> deleteWishlist(@PathVariable int userId, @PathVariable Long id) {
+        Optional<Wishlist> wishlist = model.findById(id);
+        if (wishlist.isPresent()) {
+            model.deleteById(id);
+            Optional<Wishlist> deletedWishlist = model.findById(id);
+            if (!deletedWishlist.isPresent()) {
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(500).build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
