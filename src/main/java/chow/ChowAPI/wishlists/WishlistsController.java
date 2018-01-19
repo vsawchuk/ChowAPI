@@ -57,14 +57,12 @@ public class WishlistsController {
 
     @DeleteMapping("/users/{userId}/wishlists/{id}")
     public ResponseEntity<Object> deleteWishlist(@PathVariable int userId, @PathVariable Long id) {
-        Optional<Wishlist> wishlist = model.findById(id);
-        if (wishlist.isPresent()) {
+        if (model.existsById(id)) {
             model.deleteById(id);
-            Optional<Wishlist> deletedWishlist = model.findById(id);
-            if (!deletedWishlist.isPresent()) {
-                return ResponseEntity.ok().build();
+            if (model.existsById(id)) {
+                return ResponseEntity.status(500).build();
             }
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
