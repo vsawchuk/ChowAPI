@@ -46,6 +46,12 @@ public class Restaurant implements Serializable {
     @Column(name="display_address")
     private ArrayList<String> displayAddress;
 
+    @Column(name="latitude")
+    private double latitude;
+
+    @Column(name="longitude")
+    private double longitude;
+
     @ManyToMany(
             fetch=FetchType.LAZY,
             cascade = {
@@ -59,7 +65,7 @@ public class Restaurant implements Serializable {
 
     protected Restaurant() { }
 
-    public Restaurant(String name, String imageUrl, String url, int rating, int reviewCount, String price, String yelpId, ArrayList<String> displayAddress) {
+    public Restaurant(String name, String imageUrl, String url, int rating, int reviewCount, String price, String yelpId, ArrayList<String> displayAddress, double latitude, double longitude) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.url = url;
@@ -68,6 +74,8 @@ public class Restaurant implements Serializable {
         this.price = price;
         this.yelpId = yelpId;
         this.displayAddress = displayAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
@@ -82,6 +90,9 @@ public class Restaurant implements Serializable {
                 ", price='" + price + '\'' +
                 ", yelpId='" + yelpId + '\'' +
                 ", displayAddress=" + displayAddress +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", wishlists=" + wishlists +
                 '}';
     }
 
@@ -147,6 +158,22 @@ public class Restaurant implements Serializable {
 
     public void setDisplayAddress(ArrayList<String> displayAddress) {
         this.displayAddress = displayAddress;
+    }
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public Set<Wishlist> getWishlists() {
