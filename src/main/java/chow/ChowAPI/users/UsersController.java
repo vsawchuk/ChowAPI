@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import chow.ChowAPI.wishlists.Wishlist;
+import chow.ChowAPI.wishlists.WishlistModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UsersController {
     @Autowired
     private UserModel model;
+
+    @Autowired
+    private WishlistModel wishlistModel;
 
     @GetMapping(path = "/users")
     public List<User> all() {
@@ -42,6 +47,8 @@ public class UsersController {
                 return ResponseEntity.created(location).body(existingUser);
             } else {
                 savedUser = model.save(user);
+                Wishlist defaultWishlist = new Wishlist(null, "My Wishlist", savedUser.getId());
+                wishlistModel.save(defaultWishlist);
                 URI location = ServletUriComponentsBuilder
                         .fromCurrentRequest().path("/{id}")
                         .buildAndExpand(savedUser.getId()).toUri();

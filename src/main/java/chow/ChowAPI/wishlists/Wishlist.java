@@ -28,7 +28,7 @@ public class Wishlist implements Serializable {
     private String name;
 
     @Column(name="user_id")
-    private int userId;
+    private Long userId;
 
     @ManyToMany(
             fetch=FetchType.EAGER,
@@ -47,7 +47,7 @@ public class Wishlist implements Serializable {
 
     protected Wishlist() { }
 
-    public Wishlist(Long id, String name, int userId) {
+    public Wishlist(Long id, String name, Long userId) {
         this.id = id;
         this.name = name;
         this.userId = userId;
@@ -71,7 +71,7 @@ public class Wishlist implements Serializable {
         return this.name;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return this.userId;
     }
 

@@ -17,13 +17,13 @@ public class WishlistsController {
     private WishlistModel model;
 
     @GetMapping(path = "/users/{userId}/wishlists")
-    public ResponseEntity<Object> findUserWishlists(@PathVariable int userId) {
+    public ResponseEntity<Object> findUserWishlists(@PathVariable Long userId) {
         List<Wishlist> wishlists = model.findByUserId(userId);
         return ResponseEntity.ok(wishlists);
     }
 
     @GetMapping(path = "/users/{userId}/wishlists/{id}")
-    public ResponseEntity<Object> findWishlist(@PathVariable int userId, @PathVariable Long id) {
+    public ResponseEntity<Object> findWishlist(@PathVariable Long userId, @PathVariable Long id) {
         Optional<Wishlist> wishlist = model.findById(id);
         if (wishlist.isPresent()) {
             return ResponseEntity.ok(wishlist.get());
@@ -32,7 +32,7 @@ public class WishlistsController {
     }
 
     @PutMapping("/users/{userId}/wishlists/{id}")
-    public ResponseEntity<Object> updateWishlist(@PathVariable int userId, @PathVariable Long id, @RequestParam String name) {
+    public ResponseEntity<Object> updateWishlist(@PathVariable Long userId, @PathVariable Long id, @RequestParam String name) {
         Optional<Wishlist> wishlist = model.findById(id);
         if (wishlist.isPresent()) {
             Wishlist updatedWishlist = wishlist.get();
@@ -56,7 +56,7 @@ public class WishlistsController {
     }
 
     @DeleteMapping("/users/{userId}/wishlists/{id}")
-    public ResponseEntity<Object> deleteWishlist(@PathVariable int userId, @PathVariable Long id) {
+    public ResponseEntity<Object> deleteWishlist(@PathVariable Long userId, @PathVariable Long id) {
         if (model.existsById(id)) {
             model.deleteById(id);
             if (model.existsById(id)) {
