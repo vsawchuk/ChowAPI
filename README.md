@@ -16,7 +16,8 @@ AWS_DB_USERNAME=yourAWSUsername
 AWS_DB_PASSWORD=yourAWSPassword
 ```
 
-6. Send requests to the endpoints below at `localhost:5000/`
+6. Use your IDE to run the `ChowApiApplication` class's `main` function
+7. Send requests to the endpoints below at `localhost:5000/`
 
 ### MySQL Scripts
 
